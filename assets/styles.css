@@ -5,7 +5,7 @@
 /* Variables Setup */
 :root {
     --bg-col:rgb(60, 60, 60);
-    --nav-col:rgb(30,30,30);
+    --title-col:rgb(30,30,30);
 }
 
 /* -----------------------------------
@@ -33,7 +33,7 @@ body {
     padding: 10px;
     text-align: center;
     align-items: center;
-    background-color: var(--nav-col);
+    background-color: var(--title-col);
 }
 
 .title-text{
