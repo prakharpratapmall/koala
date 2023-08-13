@@ -1,0 +1,54 @@
+/* Font Import */
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap");
+
+/* Variables Setup */
+:root {
+    --bg-col:rgb(60, 60, 60);
+    --nav-col:rgb(30,30,30);
+}
+
+/* -----------------------------------
+ CSS for Website
+----------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-col);
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  align-items: center;
+}
+
+.title{
+    padding: 10px;
+    text-align: center;
+    align-items: center;
+    background-color: var(--nav-col);
+}
+
+.title-text{
+    font-size: 2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.footer{
+    padding: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+.footer-text{
+    font-size: 1.1em;
+}
