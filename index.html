@@ -6,22 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Koala Renderer</title>
+
     <link rel="stylesheet" href="assets/styles.css" />
+    <script type="text/javascript" src="app.js" charset="utf-8"></script>
   </head>
 
-  <body>
+  <body onload="startWebGL();">
     <div class="title">
       <div class="title-text">Koala</div>
     </div>
 
     <div class="renderer">
-      <canvas class="window"> </canvas>
+      <div class="renderer-border">
+        <canvas class="window" id="window"></canvas>
+      </div>
     </div>
 
     <div class="footer">
       <div class="footer-text">Copyright © 2022 • Siddhartha Pratap Singh</div>
     </div>
-
-    <script src="app.js" charset="utf-8"></script>
   </body>
 </html>
