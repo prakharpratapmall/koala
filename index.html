@@ -17,13 +17,81 @@
     </div>
 
     <div class="renderer">
+      <div class="ui-border-left">
+        <div class="ui-window">
+          <div class="ui-title">Scene Details</div>
+
+          <div class="ui-items">
+            <div class="ui-element">N/A</div>
+          </div>
+        </div>
+      </div>
+
       <div class="renderer-border">
         <canvas class="window" id="window"></canvas>
+      </div>
+
+      <div class="ui-border-right">
+        <div class="ui-window">
+          <div class="ui-title">Properties</div>
+
+          <div class="ui-items">
+            <div class="ui-slider" id="bgRedSlider">
+              <div class="slider-title">
+                <div class="slider-property">BG Red:</div>
+                <div class="slider-value">0.2</div>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="255"
+                value="255"
+                class="slider"
+              />
+            </div>
+
+            <div class="ui-slider" id="bgGreenSlider">
+              <div class="slider-title">
+                <div class="slider-property">BG Green:</div>
+                <div class="slider-value">0.2</div>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="255"
+                value="255"
+                class="slider"
+              />
+            </div>
+
+            <div class="ui-slider" id="bgBlueSlider">
+              <div class="slider-title">
+                <div class="slider-property">BG Blue:</div>
+                <div class="slider-value">0.2</div>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="255"
+                value="255"
+                class="slider"
+              />
+            </div>
+
+            <div class="ui-button">
+              <div class="button-title">Reset BG Color:-</div>
+
+              <button class="button-callback" onclick="resetBGColor()">
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="footer">
-      <div class="footer-text">Copyright © 2022 • Siddhartha Pratap Singh</div>
+      <div class="footer-text">Copyright © 2023 • Siddhartha Pratap Singh</div>
     </div>
   </body>
 </html>
