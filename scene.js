@@ -5,6 +5,26 @@
 var bgColorR; // Current BG Red Value
 var bgColorG; // Current BG Green Value
 var bgColorB; // Current BG Blue Value
+
+var buffer; // Object Buffer
+var shader; // Shader Reference
+
+// Vertex Shader Code
+const vertexShaderCode = `#version 300 es
+in vec3 aPosition;
+
+void main() {
+  gl_Position = vec4(aPosition, 1.0);
+}`;
+
+// Fragment Shader Code
+const fragShaderCode = `#version 300 es
+precision mediump float;
+out vec4 fragColor;
+
+void main() {
+  fragColor = vec4(0.3, 0.6, 0.9, 1.0);
+}`;
 //-----------------------------------------------
 
 //! Scene GUI Variables
@@ -67,10 +87,30 @@ function initSceneGUI() {
 // Initialises the scene components for renderering
 function initScene() {
   // Load Shaders
+  shader = new Shader();
+  shader.initShader(vertexShaderCode, fragShaderCode);
+  var posLoc = shader.getLocation("aPosition");
+
   // Load Vertex Buffers
+  buffer = new VertexArray();
+  buffer.generateBuffers();
+  buffer.bindVertexBuffer(triangleBufferData);
+  buffer.setAttributeArray(posLoc, 3, 3 * 4, 0);
+
   // Setup Actors
   // Setup Shader Data
+
   // Setup GUI
   initSceneGUI();
+}
+
+// Renders all the objects of this scene
+function renderScene() {
+  // Refresh window with background color
+  gl.clearColor(bgColorR, bgColorG, bgColorB, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  // Draw Objects
+  buffer.drawTriangles(3, 0);
 }
 //-----------------------------------------------
