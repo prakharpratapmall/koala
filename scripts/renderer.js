@@ -21,20 +21,37 @@ var renderMode = renderModes.Fill; // Current Render mode
 class VertexArray {
   // Vertex Array Constructor
   constructor() {
-    this.VBO = 0;
-    this.EBO = 0;
+    this.VAO = 0; // Vertex Array Object
+    this.VBO = 0; // Vertex Buffer Object
+    this.EBO = 0; // Element Buffer Object
   }
 
   // Generates the buffers in memory
   generateBuffers() {
+    this.VAO = gl.createVertexArray();
     this.VBO = gl.createBuffer();
     this.EBO = gl.createBuffer();
+  }
+
+  // Binds the VAO
+  bindVertexArray() {
+    gl.bindVertexArray(this.VAO);
+  }
+
+  // Unbinds the VAO
+  unbindVertexArray() {
+    gl.bindVertexArray(null);
   }
 
   // Binds the VBO with data
   bindVertexBuffer(data) {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.VBO);
     gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+  }
+
+  // Unbinds the VBO
+  unbindVertexBuffer() {
+    gl.bindBuffer(gl.ARRAY_BUFFER, null);
   }
 
   // Binds the EBO with data
@@ -51,12 +68,16 @@ class VertexArray {
 
   // Draws the VBO as Triangles
   drawTriangles(count, start) {
+    this.bindVertexArray();
     gl.drawArrays(getRenderMode(), start, count);
+    this.unbindVertexArray();
   }
 
   // Draws the VBO using indices
   drawIndices(count, start) {
+    this.bindVertexArray();
     gl.drawElements(getRenderMode(), count, gl.UNSIGNED_SHORT, start);
+    this.unbindVertexArray();
   }
 }
 //-----------------------------------------------
