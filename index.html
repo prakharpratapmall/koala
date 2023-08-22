@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="assets/styles.css" />
     <script
       type="text/javascript"
+      src="scripts/external/glMatrix-0.9.5.min.js"
+      charset="utf-8"
+    ></script>
+    <script
+      type="text/javascript"
+      src="scripts/math.js"
+      charset="utf-8"
+    ></script>
+    <script
+      type="text/javascript"
       src="scripts/gui.js"
       charset="utf-8"
     ></script>
@@ -57,45 +67,14 @@
           <div class="ui-title">Properties</div>
 
           <div class="ui-items">
-            <div class="ui-slider" id="bgRedSlider">
-              <div class="slider-title">
-                <div class="slider-property">BG Red:</div>
-                <div class="slider-value">0.2</div>
-              </div>
+            <div class="ui-color">
+              <div class="color-label">Background Color:-</div>
               <input
-                type="range"
-                min="0"
-                max="255"
-                value="255"
-                class="slider"
-              />
-            </div>
-
-            <div class="ui-slider" id="bgGreenSlider">
-              <div class="slider-title">
-                <div class="slider-property">BG Green:</div>
-                <div class="slider-value">0.2</div>
-              </div>
-              <input
-                type="range"
-                min="0"
-                max="255"
-                value="255"
-                class="slider"
-              />
-            </div>
-
-            <div class="ui-slider" id="bgBlueSlider">
-              <div class="slider-title">
-                <div class="slider-property">BG Blue:</div>
-                <div class="slider-value">0.2</div>
-              </div>
-              <input
-                type="range"
-                min="0"
-                max="255"
-                value="255"
-                class="slider"
+                type="color"
+                name="backgroundColor"
+                class="color-val"
+                id="backgroundColor"
+                value="#0d1926"
               />
             </div>
 
@@ -123,6 +102,17 @@
                   Fill
                 </button>
               </div>
+            </div>
+
+            <div class="ui-color">
+              <div class="color-label">Object Color:-</div>
+              <input
+                type="color"
+                name="objectColor"
+                class="color-val"
+                id="objectColor"
+                value="#ffaa33"
+              />
             </div>
           </div>
         </div>

@@ -52,8 +52,24 @@ class Shader {
   }
 
   // Return location of input attribute in shader
-  getLocation(attribute) {
+  getAttribLocation(attribute) {
     return gl.getAttribLocation(this.shader, attribute);
+  }
+
+  // Gets Variable location in shader via name
+  getVarLocation(variable) {
+    return gl.getUniformLocation(this.shader, variable);
+  }
+
+  // Sets Vector3 value in shader
+  setVec3(name, value) {
+    gl.uniform3f(this.getVarLocation(name), value.x, value.y, value.z);
+  }
+
+  // Sets color value in shader
+  setColor(name, value) {
+    // gl.uniform3fv(this.getVarLocation(name), [value.r, value.g, value.b]);
+    gl.uniform3f(this.getVarLocation(name), value.r, value.g, value.b);
   }
 }
 //-----------------------------------------------

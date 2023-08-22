@@ -2,9 +2,7 @@
 
 //! Scene Variables
 //-----------------------------------------------
-var bgColorR; // Current BG Red Value
-var bgColorG; // Current BG Green Value
-var bgColorB; // Current BG Blue Value
+var bgColor; // Background color reference
 
 var buffer; // Object Buffer
 var buffer2; // Second object buffer
@@ -23,18 +21,20 @@ void main() {
 const fragShaderCode = `#version 300 es
 precision mediump float;
 out vec4 fragColor;
+uniform vec3 color;
 
 void main() {
-  fragColor = vec4(0.3, 0.6, 0.9, 1.0);
+  fragColor = vec4(color, 1.0);
 }`;
+
+var objectColor; // Object color reference
 //-----------------------------------------------
 
 //! Scene GUI Variables
 //-----------------------------------------------
-var sliderR; // BG Red Channel Slider Reference
-var sliderG; // BG Green Channel Slider Reference
-var sliderB; // BG Blue Channel Slider Reference
+var bgColorUI; // Background Color UI Reference
 var renderModeText; // Render Mode UI Reference
+var objectColorUI; // Object Color UI Reference
 //-----------------------------------------------
 
 //! Scene GUI Functions
@@ -42,13 +42,12 @@ var renderModeText; // Render Mode UI Reference
 
 // Resets the Background color
 function resetBGColor() {
-  bgColorR = 0.05;
-  bgColorG = 0.1;
-  bgColorB = 0.15;
+  bgColorUI.value = "#0d1926";
+  setBGColor();
+}
 
-  setColorSliderValue(sliderR, bgColorR);
-  setColorSliderValue(sliderG, bgColorG);
-  setColorSliderValue(sliderB, bgColorB);
+function setBGColor() {
+  bgColor = convertHexToRGB(bgColorUI.value);
 }
 
 // Sets the Render Mode UI Text
@@ -62,38 +61,21 @@ function setRenderModeUI(mode) {
   }
 }
 
-// BG Red Channel Slider Callback
-function sliderRChanged() {
-  bgColorR = sliderR.querySelector("input").value / 255.0;
-  sliderR.getElementsByClassName("slider-value")[0].innerHTML =
-    Math.round(bgColorR * 100) / 100;
-}
-
-// BG Green Channel Slider Callback
-function sliderGChanged() {
-  bgColorG = sliderG.querySelector("input").value / 255.0;
-  sliderG.getElementsByClassName("slider-value")[0].innerHTML =
-    Math.round(bgColorG * 100) / 100;
-}
-
-// BG Blue Channel Slider Callback
-function sliderBChanged() {
-  bgColorB = sliderB.querySelector("input").value / 255.0;
-  sliderB.getElementsByClassName("slider-value")[0].innerHTML =
-    Math.round(bgColorB * 100) / 100;
+// Sets Object Color variable from UI Value
+function setObjectColor() {
+  objectColor = convertHexToRGB(objectColorUI.value);
 }
 
 // Initialises the scene specific ui
 function initSceneGUI() {
-  sliderR = document.getElementById("bgRedSlider");
-  sliderR.querySelector("input").addEventListener("input", sliderRChanged);
-  sliderG = document.getElementById("bgGreenSlider");
-  sliderG.querySelector("input").addEventListener("input", sliderGChanged);
-  sliderB = document.getElementById("bgBlueSlider");
-  sliderB.querySelector("input").addEventListener("input", sliderBChanged);
-  resetBGColor();
+  bgColorUI = document.getElementById("backgroundColor");
+  bgColorUI.addEventListener("input", setBGColor);
+  setBGColor();
   renderModeText = document.getElementById("renderModeText");
   setRenderMode(2);
+  objectColorUI = document.getElementById("objectColor");
+  objectColorUI.addEventListener("input", setObjectColor);
+  setObjectColor();
 }
 //-----------------------------------------------
 
@@ -105,11 +87,12 @@ function initScene() {
   // Load Shaders
   shader = new Shader();
   shader.initShader(vertexShaderCode, fragShaderCode);
-  var posLoc = shader.getLocation("aPosition");
+  var posLoc = shader.getAttribLocation("aPosition");
 
   // Load Vertex Buffers
-  buffer = initTriangleBuffer();
-  buffer2 = initRectangleBuffer();
+  buffer = initTriangleBuffer(posLoc);
+  buffer2 = initRectangleBuffer(posLoc);
+
   // Setup Actors
   // Setup Shader Data
 
@@ -120,8 +103,13 @@ function initScene() {
 // Renders all the objects of this scene
 function renderScene() {
   // Refresh window with background color
-  gl.clearColor(bgColorR, bgColorG, bgColorB, 1.0);
+  gl.clearColor(bgColor.r, bgColor.g, bgColor.b, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  // Calculate Data
+
+  // Refresh Shaders
+  shader.setColor("color", objectColor);
 
   // Draw Objects
   renderTriangleBuffer(buffer);

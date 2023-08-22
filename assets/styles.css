@@ -56,6 +56,14 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+.renderer-border {
+  padding: 5px;
+  background-color: var(--renderer-border-col);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .ui-border-left {
   padding: 5px;
   padding-right: 0px;
@@ -92,10 +100,11 @@ body {
 
 .slider-title {
   display: flex;
+  align-items: center;
 }
 
 .slider-value {
-  padding-left: 3px;
+  margin-left: 3px;
   font-size: 0.95em;
   font-style: normal;
   font-weight: bold;
@@ -103,6 +112,7 @@ body {
 
 .ui-button {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -117,10 +127,11 @@ body {
 
 .radio-title {
   display: flex;
+  align-items: center;
 }
 
 .radio-value {
-  padding-left: 3px;
+  margin-left: 3px;
   font-size: 0.95em;
   font-style: normal;
   font-weight: bold;
@@ -131,12 +142,13 @@ body {
   justify-content: space-around;
 }
 
-.renderer-border {
-  padding: 5px;
-  background-color: var(--renderer-border-col);
+.ui-color {
   display: flex;
-  justify-content: center;
   align-items: center;
+}
+
+.color-val {
+  margin-left: 3px;
 }
 
 .footer {
