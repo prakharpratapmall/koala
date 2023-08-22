@@ -15,6 +15,7 @@ in vec3 aPosition;
 
 void main() {
   gl_Position = vec4(aPosition, 1.0);
+  gl_PointSize=5.0;
 }`;
 
 // Fragment Shader Code
@@ -32,6 +33,7 @@ void main() {
 var sliderR; // BG Red Channel Slider Reference
 var sliderG; // BG Green Channel Slider Reference
 var sliderB; // BG Blue Channel Slider Reference
+var renderModeText; // Render Mode UI Reference
 //-----------------------------------------------
 
 //! Scene GUI Functions
@@ -46,6 +48,17 @@ function resetBGColor() {
   setColorSliderValue(sliderR, bgColorR);
   setColorSliderValue(sliderG, bgColorG);
   setColorSliderValue(sliderB, bgColorB);
+}
+
+// Sets the Render Mode UI Text
+function setRenderModeUI(mode) {
+  if (mode == 0) {
+    setLabelValue(renderModeText, "Point");
+  } else if (mode == 1) {
+    setLabelValue(renderModeText, "Line");
+  } else {
+    setLabelValue(renderModeText, "Fill");
+  }
 }
 
 // BG Red Channel Slider Callback
@@ -78,6 +91,8 @@ function initSceneGUI() {
   sliderB = document.getElementById("bgBlueSlider");
   sliderB.querySelector("input").addEventListener("input", sliderBChanged);
   resetBGColor();
+  renderModeText = document.getElementById("renderModeText");
+  setRenderMode(2);
 }
 //-----------------------------------------------
 
@@ -94,9 +109,9 @@ function initScene() {
   // Load Vertex Buffers
   buffer = new VertexArray();
   buffer.generateBuffers();
-  buffer.bindVertexBuffer(triangleBufferData);
+  buffer.bindVertexBuffer(rectangleBufferData);
   buffer.setAttributeArray(posLoc, 3, 3 * 4, 0);
-
+  buffer.bindElementBuffer(rectangleIndices);
   // Setup Actors
   // Setup Shader Data
 
@@ -111,6 +126,7 @@ function renderScene() {
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   // Draw Objects
-  buffer.drawTriangles(3, 0);
+  // buffer.drawTriangles(3, 0);
+  buffer.drawIndices(6, 0);
 }
 //-----------------------------------------------

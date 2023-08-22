@@ -4,6 +4,14 @@
 //-----------------------------------------------
 var gl; // Renderer reference
 var animation; // Reference to the animation element
+
+// Possible Render modes
+const renderModes = {
+  Point: 0,
+  Line: 1,
+  Fill: 2,
+};
+var renderMode = renderModes.Fill; // Current Render mode
 //-----------------------------------------------
 
 //! Renderer Classes
@@ -14,17 +22,25 @@ class VertexArray {
   // Vertex Array Constructor
   constructor() {
     this.VBO = 0;
+    this.EBO = 0;
   }
 
   // Generates the buffers in memory
   generateBuffers() {
     this.VBO = gl.createBuffer();
+    this.EBO = gl.createBuffer();
   }
 
   // Binds the VBO with data
   bindVertexBuffer(data) {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.VBO);
     gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+  }
+
+  // Binds the EBO with data
+  bindElementBuffer(data) {
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.EBO);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, data, gl.STATIC_DRAW);
   }
 
   // Defines data at attribute location
@@ -35,7 +51,12 @@ class VertexArray {
 
   // Draws the VBO as Triangles
   drawTriangles(count, start) {
-    gl.drawArrays(gl.TRIANGLES, start, count);
+    gl.drawArrays(getRenderMode(), start, count);
+  }
+
+  // Draws the VBO using indices
+  drawIndices(count, start) {
+    gl.drawElements(getRenderMode(), count, gl.UNSIGNED_SHORT, start);
   }
 }
 //-----------------------------------------------
@@ -56,6 +77,32 @@ function initWebGL(canvas) {
   if (!gl) {
     alert("ERR: UNABLE TO INITIALIZE WEBGL"); // WebGL error message
   }
+}
+
+// Returns the current render mode
+function getRenderMode() {
+  var mode;
+  switch (renderMode) {
+    case renderModes.Point:
+      mode = gl.POINTS;
+      break;
+    case renderModes.Line:
+      mode = gl.LINE_LOOP;
+      break;
+    case renderModes.Fill:
+      mode = gl.TRIANGLES;
+      break;
+    default:
+      mode = gl.TRIANGLES;
+      break;
+  }
+  return mode;
+}
+
+// Sets the Render Mode
+function setRenderMode(mode) {
+  renderMode = mode;
+  setRenderModeUI(mode);
 }
 
 // Starts the Render Loop

@@ -11,8 +11,8 @@ var canvas; // Canvas Reference
 // Initialises the Canvas element
 function initCanvas() {
   canvas = document.getElementById("window");
-  canvas.style.width = windowWidth + "px";
-  canvas.style.height = windowHeight + "px";
+  canvas.width = windowWidth;
+  canvas.height = windowHeight;
 }
 
 // Initialises the GUI elements
@@ -37,5 +37,10 @@ function setColorSliderValue(slider, val) {
   slider.querySelector("input").value = val * 255.0;
   slider.getElementsByClassName("slider-value")[0].innerHTML =
     Math.round(val * 100) / 100;
+}
+
+// Sets the label value to given text
+function setLabelValue(label, text) {
+  label.innerHTML = text;
 }
 //-----------------------------------------------
